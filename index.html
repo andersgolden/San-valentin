@@ -1,16 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>San Valentín </title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5e6e6;
+            overflow: hidden;
+            position: relative;
+            flex-direction: column;
+        }
+        
+        .falling-element {
+            position: absolute;
+            font-size: 24px;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            from {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .fireworks {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: gold;
+            border-radius: 50%;
+            opacity: 0;
+            animation: explode 1s ease-out;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>
-        hola mi amor
-    </h1>
+    <div class="card">
+        <div class="card-content">
+            <h1>¡Feliz San Valentín, mi amor!</h1>
+            <p>Te AMO con todo mi corazón 💖</p>
+            <button id="surpriseBtn">Haz clic para una sorpresa</button>
+        </div>
+        <div id="surprise" class="hidden">
+            <p>Eres la persona más especial para mí. Gracias por estar a mi lado. 🌹</p>
+        </div>
+    </div>
+
+    <audio id="romanticMusic" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" preload="auto"></audio>
+
+    <script>
+        const elements = ['🌹', '🌷', '💖', 'AA.EE', ];
+
+        function createFallingElement() {
+            const elem = document.createElement('div');
+            elem.classList.add('falling-element');
+            elem.innerText = elements[Math.floor(Math.random() * elements.length)];
+            elem.style.left = Math.random() * 100 + 'vw';
+            elem.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(elem);
+            setTimeout(() => elem.remove(), 5000);
+        }
+        setInterval(createFallingElement, 300);
+
+        document.getElementById('surpriseBtn').addEventListener('click', () => {
+            document.getElementById('surprise').classList.toggle('hidden');
+            document.getElementById('romanticMusic').play();
+            createFireworks();
+        });
+
+        function createFireworks() {
+            for (let i = 0; i < 10; i++) {
+                let firework = document.createElement('div');
+                firework.classList.add('fireworks');
+                firework.style.left = Math.random() * 100 + 'vw';
+                firework.style.top = Math.random() * 100 + 'vh';
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+    </script>
 </body>
 
 </html>
